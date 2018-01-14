@@ -1,11 +1,13 @@
-version: '2'
+version: '3'
+
 services:
   web:
-    build: ./
+    build: .
     ports:
       - "5000:5000"
     volumes:
       - ./:/capitan/
+      - /var/run/docker.sock:/var/run/docker.sock
     restart: on-failure
   mysql:
     image: mysql:5.7

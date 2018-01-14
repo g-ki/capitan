@@ -1,0 +1,13 @@
+version: '2'
+services:
+  web:
+    build: ./
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./:/capitan/
+    restart: on-failure
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - ~/.docker-volumes/capitan/mysql/:/data/db

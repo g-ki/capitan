@@ -1,0 +1,21 @@
+<!doctype html>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Capitan</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="page">
+    <div class="metanav">
+    {% if not session.logged_in %}
+      <a href="{{ url_for('capitan.login') }}">log in</a>
+    {% else %}
+      <a href="{{ url_for('capitan.logout') }}">log out</a>
+    {% endif %}
+    </div>
+
+    {% block body %}{% endblock %}
+  </div>
+</body>
+</html>

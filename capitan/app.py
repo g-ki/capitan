@@ -13,8 +13,6 @@ def create_app(config=None):
     app.config.from_pyfile('settings.py', silent=True)
     app.config.update(config or {})
 
-    app.secret_key = "Mf\xf2\x94 \xb2^\x81\x92\xb2l\x8d\xc9]'\t\x86\xb9\xb4\xaa\xcc2\x01\xfe"
-
     register_blueprints(app)
     app.logger.addHandler(stream_handler)
 

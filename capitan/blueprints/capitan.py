@@ -26,4 +26,10 @@ def logout():
 
 @bp.route('/')
 def dashboard():
-  return "Dashboard ..."
+    return "Dashboard ..."
+
+
+@bp.route('/404')
+def page_not_found():
+    current_app.logger.error('this is error')
+    return render_template('page_not_found.html'), 404

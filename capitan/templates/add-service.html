@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h1>Add Service</h1>
+  <form action="{{ url_for('capitan.add_service') }}" method="post">
+    <dl>.
+      <dt>Service name:
+      <dd><input type="text" name="name">
+      <dt>Image:
+      <dd><input type="text" name="image">
+      <dt>Command:
+      <dd><input type="text" name="command">
+      <dt>Arguments:
+      <dd><input type="text" name="arguments">
+      <dt>Constraint: 
+      <label><i>(ex. node.hostname==node-2)</i></label>
+      <dd><input type="text" name="constraint">
+      <dt>Replicas:
+      <dd><input type="number" name="replicas">
+      <dd><input type="submit" value="Add">
+    </dl>
+  </form>
+{% endblock %}

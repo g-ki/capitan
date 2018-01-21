@@ -99,6 +99,23 @@ def services():
 
     return render_template('services.html', services=services)
 
+@bp.route('/add-serivce', methods=['GET', 'POST'])
+def add_service():
+      if request.method == 'POST':
+          client.services.create(
+            request.form['image'],
+            command=[request.form['command']],
+            args=[request.form['arguments']],
+            name=request.form['name'],
+            constraints=[request.form['constraint']],
+            mode=docker.types.ServiceMode('replicated', replicas=int(float(request.form['replicas'])))
+          )
+
+          return redirect(url_for('capitan.services'))
+      return render_template('add-service.html')
+
+
+
 @bp.route('/404')
 def page_not_found():
     current_app.logger.error('this is error')

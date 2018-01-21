@@ -2,6 +2,9 @@ from flask import Blueprint, request, session, g, redirect, url_for, abort, \
      render_template, flash, current_app
 import docker
 
+from capitan.app import db
+from capitan.models.user import User
+
 bp = Blueprint('capitan', __name__)
 client = docker.from_env()
 
@@ -57,6 +60,7 @@ def containers():
 
 @bp.route('/')
 def dashboard():
+    db.create_all()
     return "Dashboard ..."
 
 @bp.route('/add-worker')

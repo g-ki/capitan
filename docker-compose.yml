@@ -11,7 +11,3 @@ services:
     volumes:
       - ./:/capitan/
       - /var/run/docker.sock:/var/run/docker.sock
-  mysql:
-    image: mysql:5.7
-    volumes:
-      - ~/.docker-volumes/capitan/mysql/:/data/db

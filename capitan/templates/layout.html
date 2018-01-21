@@ -9,9 +9,13 @@
   <div class="page">
     <div class="metanav">
     {% if not session.logged_in %}
-      <a href="{{ url_for('capitan.login') }}">log in</a>
+      <a href="{{ url_for('capitan.login') }}">Log in</a>
     {% else %}
-      <a href="{{ url_for('capitan.logout') }}">log out</a>
+      <a href="{{ url_for('capitan.status') }}">Status</a>
+      <a href="{{ url_for('capitan.containers') }}">Containers</a>
+      <a href="{{ url_for('capitan.add_worker') }}">Add Worker</a>
+      <a href="{{ url_for('capitan.nodes') }}">Nodes</a>
+      <a href="{{ url_for('capitan.logout') }}">Log out</a>
     {% endif %}
     </div>
 

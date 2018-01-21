@@ -1,7 +1,9 @@
 from flask import Blueprint, request, session, g, redirect, url_for, abort, \
      render_template, flash, current_app
+import docker
 
 bp = Blueprint('capitan', __name__)
+client = docker.from_env()
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -13,7 +15,7 @@ def login():
         #
         session['logged_in'] = True
         flash('You were logged in')
-        return redirect(url_for('capitan.dashboard'))
+        return redirect(url_for('capitan.status'))
     return render_template('login.html', error=error)
 
 
@@ -23,11 +25,65 @@ def logout():
     flash('You were logged out')
     return redirect(url_for('capitan.login'))
 
+@bp.route('/status')
+def status():
+    status = docker.DockerClient(base_url='unix://var/run/docker.sock').info()
+
+    base_status = [
+        'Containers', 'ContainersRunning', 'ContainersPaused', 'ContainersStopped', 'Images',
+        'DockerRootDir', 'Name', 'Driver'
+    ]
+    generated_status = { your_key: status[your_key] for your_key in base_status }
+    generated_status['SwarmAddr'] = status['Swarm']['NodeAddr']
+    return render_template('status.html', status=generated_status)
+
+@bp.route('/containers')
+def containers():
+    client1 = docker.APIClient(base_url='unix://var/run/docker.sock')
+    containers = client.containers.list();
+    containers_ports = {}
+    for container in containers:
+        ports = client1.inspect_container(container.id)['NetworkSettings']['Ports']
+        container_ports = []
+        for inside_port, outside_port in ports.items():
+            if outside_port:
+                host_ip = outside_port[0]['HostIp']
+                host_port = outside_port[0]['HostPort']
+                container_ports.append(f"{host_ip}:{host_port} -> {inside_port}")
+            else:
+                container_ports.append(f"{inside_port}")
+        containers_ports[container.id] = ', '.join(container_ports)
+    return render_template('containers.html', containers=containers, ports=containers_ports)
 
 @bp.route('/')
 def dashboard():
     return "Dashboard ..."
 
+@bp.route('/add-worker')
+def add_worker():
+    token = client.swarm.attrs['JoinTokens']['Worker']
+    address = client.info()['Swarm']['RemoteManagers'][0]['Addr']
+    script = f"docker swarm join --token {token} {address}"
+
+    return render_template('add-worker.html', script=script)
+
+@bp.route('/nodes')
+def nodes():
+    def compose_node(node):
+        attributes = node.attrs
+        return {
+            'Host': attributes['Description']['Hostname'],
+            'Id': attributes['ID'],
+            'Role': attributes['Spec']['Role'],
+            'EngineVersion': attributes['Description']['Engine']['EngineVersion'],
+            'State': attributes['Status']['State'],
+            'Addr': attributes['Status']['Addr'],
+            'ManagerAddr': attributes['ManagerStatus']['Addr']
+        }
+
+    nodes = list(map(compose_node, client.nodes.list()))
+
+    return render_template('nodes.html', nodes=nodes)
 
 @bp.route('/404')
 def page_not_found():

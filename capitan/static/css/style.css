@@ -1,3 +1,48 @@
 body {
-  background-color: #2196f3;
+  /*background-color: #2196f3;*/
+}
+
+a {
+  text-decoration: none;
+}
+
+.metanav {
+  display: flex;
+  flex-direction: row;
+  height: 35px;
+  align-items: center;
+}
+
+.metanav a {
+  padding-left: 15px;
+  padding-right: 15px;
+  height: 100%;
+  display: flex;
+  border: 1px solid white;
+  align-items: center;
+  color: white;
+  background-color: #7d7c7c;
+}
+
+.table-preview {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.table-preview table {
+  width: 70%;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid gray;
+}
+
+table th {
+  padding: 10px;
+  font-size: 20px;
 }

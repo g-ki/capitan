@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h1>Containers</h1>
+  {% if not containers %}
+    <p>No containers Available!</p>
+  {% else %}
+    <div class="table-preview">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>ContainerID</th>
+            <th>Status</th>
+            <th>Ports</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for container in containers %}
+          <tr>
+            <td>{{ container.name }}</td>
+            <td>{{ container.short_id }}</td>
+            <td>{{ container.status }}</td>
+            <td>{{ ports[container.id] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endif %}
+{% endblock %}

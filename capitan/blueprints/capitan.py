@@ -49,7 +49,7 @@ def containers():
             if outside_port:
                 host_ip = outside_port[0]['HostIp']
                 host_port = outside_port[0]['HostPort']
-                container_ports.append(f"{host_ip}:{host_port} -> {inside_port}")
+                container_ports.append(f"{inside_port} -> {host_ip}:{host_port}")
             else:
                 container_ports.append(f"{inside_port}")
         containers_ports[container.id] = ', '.join(container_ports)
@@ -84,6 +84,20 @@ def nodes():
     nodes = list(map(compose_node, client.nodes.list()))
 
     return render_template('nodes.html', nodes=nodes)
+
+@bp.route('/services')
+def services():
+    def compose_service(service):
+        attributes = service.attrs
+        return {
+            'Name': service.name,
+            'Image': attributes['Spec']['TaskTemplate']['ContainerSpec']['Image'],
+            'Replicas': attributes['Spec']['Mode'].get('Replicated', {}).get('Replicas', 0)
+        }
+
+    services = list(map(compose_service, client.services.list()))
+
+    return render_template('services.html', services=services)
 
 @bp.route('/404')
 def page_not_found():

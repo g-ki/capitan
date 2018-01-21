@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h1>Services</h1>
+  {% if not services %}
+    <p>No services Available!</p>
+  {% else %}
+    <div class="table-preview">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Image</th>
+            <th>Replicas</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for service in services %}
+          <tr>
+            <td>{{ service['Name'] }}</td>
+            <td>{{ service['Image'] }}</td>
+            <td>{{ service['Replicas'] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endif %}
+{% endblock %}

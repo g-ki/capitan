@@ -3,8 +3,14 @@ import logging
 from flask import Flask, g
 from werkzeug.utils import find_modules, import_string
 
+# setup file logging
 stream_handler = logging.StreamHandler()
 stream_handler.setLevel(logging.INFO)
+
+# connect to docker engine
+import docker
+docker_client = docker.from_env()
+docker_low_client = docker.APIClient(base_url='unix://var/run/docker.sock')
 
 def create_app(config=None):
     app = Flask('capitan', instance_relative_config=True)

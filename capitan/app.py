@@ -1,18 +1,20 @@
 import os
+import logging
 from flask import Flask, g
 from werkzeug.utils import find_modules, import_string
 
-import logging
-logging.basicConfig(level=logging.DEBUG)
+stream_handler = logging.StreamHandler()
+stream_handler.setLevel(logging.INFO)
 
 def create_app(config=None):
-    app = Flask('capitan')
+    app = Flask('capitan', instance_relative_config=True)
 
+    app.config.from_object('config.settings')
+    app.config.from_pyfile('settings.py', silent=True)
     app.config.update(config or {})
 
-    app.secret_key = "Mf\xf2\x94 \xb2^\x81\x92\xb2l\x8d\xc9]'\t\x86\xb9\xb4\xaa\xcc2\x01\xfe"
-
     register_blueprints(app)
+    app.logger.addHandler(stream_handler)
 
     return app
 

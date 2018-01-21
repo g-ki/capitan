@@ -13,4 +13,4 @@ COPY . .
 
 VOLUME ["static"]
 
-CMD gunicorn -b 0.0.0.0:8000 "capitan.factory:create_app()"
+CMD gunicorn -b 0.0.0.0:8000 --access-logfile - "capitan.app:create_app()"

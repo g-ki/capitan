@@ -78,7 +78,7 @@ def nodes():
             'EngineVersion': attributes['Description']['Engine']['EngineVersion'],
             'State': attributes['Status']['State'],
             'Addr': attributes['Status']['Addr'],
-            'ManagerAddr': attributes['ManagerStatus']['Addr']
+            'ManagerAddr': attributes.get('ManagerStatus', {}).get('Addr', '-')
         }
 
     nodes = list(map(compose_node, client.nodes.list()))

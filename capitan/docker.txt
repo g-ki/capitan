@@ -1,0 +1,16 @@
+client.containers.list(filters = {'status': 'running'}) - we can filter with passing some params
+client.containers.list() - return the all container on the machine
+other functions we can use are get and create - we do not need them for now
+instance.stats(stream = False) - return the whole info for running container
+stat = instance.stats(stream = False)
+stat['name'], stat['id']
+instance.id instance.name instance.image instance.status
+instance.stop - stop the container
+instance.restart - restart the container (we can use this two with 2 buttons and xhr request to stop or restart )
+
+FOR PORTS -
+client1 = docker.APIClient(base_url='unix://var/run/docker.sock')
+client1.inspect_container(container.id)['NetworkSettings']['Ports']
+
+docker.DockerClient(base_url='unix://var/run/docker.sock')
+ - info - same as docker info we can take some info about the server - we can make one page only for this

@@ -12,5 +12,6 @@ RUN pip install -r requirements.txt
 COPY . .
 
 VOLUME ["static"]
+EXPOSE 8000
 
 CMD gunicorn -b 0.0.0.0:8000 --access-logfile - "capitan.app:create_app()"

@@ -1,0 +1,14 @@
+{% set endpoint = request.endpoint %}
+<div class="sidebar">
+  <nav>
+    <ul>
+      <li{% if endpoint == 'capitan.index' %} class="active"{% endif %}><a href="{{ url_for('capitan.index') }}">Dashboard</a></li>
+
+      <li{% if endpoint == 'nodes.index' %} class="active"{% endif %}><a href="{{ url_for('nodes.index') }}">Nodes</a></li>
+
+      <li{% if endpoint == 'services.index' %} class="active"{% endif %}><a href="{{ url_for('services.index') }}">Services</a></li>
+
+      <li{% if endpoint == 'capitan.login' %} class="active"{% endif %}><a href="{{ url_for('capitan.login') }}">Log in</a></li>
+    </ul>
+  </nav>
+</div>

@@ -1,0 +1,13 @@
+<div class="main">
+  <div class="header">
+    <h1>{% block header_title %}{% endblock %}</h1>
+    <div class="user-info">
+      {% block user_info %}{% endblock %}
+      <a href="{{ url_for('capitan.logout') }}">log out</a>
+    </div>
+  </div>
+
+  <div class="content">
+    {% block body %}{% endblock %}
+  </div>
+</div>

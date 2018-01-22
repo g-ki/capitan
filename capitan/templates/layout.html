@@ -1,27 +1,15 @@
 <!doctype html>
-<!DOCTYPE html>
 <html>
 <head>
   <title>Capitan</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700,900&amp;subset=cyrillic,cyrillic-ext" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='./css/style.css') }}">
 </head>
 <body>
   <div class="page">
-    <div class="metanav">
-    {% if not session.logged_in %}
-      <a href="{{ url_for('capitan.login') }}">Log in</a>
-    {% else %}
-      <a href="{{ url_for('capitan.index') }}">Status</a>
-      <a href="{{ url_for('capitan.containers') }}">Containers</a>
-      <a href="{{ url_for('nodes.index') }}">Nodes</a>
-      <a href="{{ url_for('nodes.new') }}">Add Worker</a>
-      <a href="{{ url_for('services.index') }}">Services</a>
-      <a href="{{ url_for('services.new') }}">Add Service</a>
-      <a href="{{ url_for('capitan.logout') }}">Log out</a>
-    {% endif %}
-    </div>
+    {% include 'sidebar.html'%}
 
-    {% block body %}{% endblock %}
+    {% extends 'main.html' %}
   </div>
 
   <script src="{{ url_for('static', filename='./js/main.js') }}"></script>

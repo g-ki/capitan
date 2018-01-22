@@ -1,36 +1,40 @@
 {% extends "layout.html" %}
+
+{% block header_title %}Nodes{% endblock %}
+
 {% block body %}
-  <h1>Nodes</h1>
   {% if not nodes %}
     <p>No nodes Available!</p>
   {% else %}
-    <div class="table-preview">
-      <table>
-        <thead>
-          <tr>
-            <th>Host</th>
-            <th>Role</th>
-            <th>State</th>
-            <th>Addr</th>
-            <th>ID</th>
-            <th>EngineVersion</th>
-            <th>ManagerAddr</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for node in nodes %}
-          <tr>
-            <td>{{ node['Host'] }}</td>
-            <td>{{ node['Role'] }}</td>
-            <td>{{ node['State'] }}</td>
-            <td>{{ node['Addr'] }}</td>
-            <td>{{ node['Id'] }}</td>
-            <td>{{ node['EngineVersion'] }}</td>
-            <td>{{ node['ManagerAddr'] }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+    <div class="box">
+      <div class="content">
+        <table>
+          <thead>
+            <tr>
+              <th>Host</th>
+              <th>Role</th>
+              <th>State</th>
+              <th>Addr</th>
+              <th>ID</th>
+              <th>EngineVersion</th>
+              <th>ManagerAddr</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for node in nodes %}
+            <tr>
+              <td>{{ node['Host'] }}</td>
+              <td>{{ node['Role'] }}</td>
+              <td>{{ node['State'] }}</td>
+              <td>{{ node['Addr'] }}</td>
+              <td>{{ node['Id'] }}</td>
+              <td>{{ node['EngineVersion'] }}</td>
+              <td>{{ node['ManagerAddr'] }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
   {% endif %}
 {% endblock %}

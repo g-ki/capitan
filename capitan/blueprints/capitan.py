@@ -14,7 +14,7 @@ def login():
         #
         session['logged_in'] = True
         flash('You were logged in')
-        return redirect(url_for('capitan.status'))
+        return redirect(url_for('capitan.index'))
     return render_template('login.html', error=error)
 
 

@@ -107,3 +107,30 @@ table td {
 table th {
   font-size: 1.2em;
 }
+
+.login-page .login-box {
+  width: 500px;
+  margin: 0 auto;
+  margin-top: 100px;
+}
+
+.login-page .login-box form {
+  display: inline-block;
+}
+
+input {
+  padding: 5px;
+  margin: 5px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  font-size: 1em;
+}
+
+.login-page input[type="submit"] {
+  width: 100%;
+  cursor: pointer;
+}
+
+.login-page input[type="submit"]:hover {
+
+}

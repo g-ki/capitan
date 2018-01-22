@@ -1,14 +1,27 @@
-{% extends "layout.html" %}
-{% block body %}
-  <h2>Login</h2>
-  {% if error %}<p class="error"><strong>Error:</strong> {{ error }}{% endif %}
-  <form action="{{ url_for('capitan.login') }}" method="post">
-    <dl>
-      <dt>Username:
-      <dd><input type="text" name="username">
-      <dt>Password:
-      <dd><input type="password" name="password">
-      <dd><input type="submit" value="Login">
-    </dl>
-  </form>
-{% endblock %}
+<!doctype html>
+<html>
+<head>
+  <title>Capitan</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700,900&amp;subset=cyrillic,cyrillic-ext" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='./css/style.css') }}">
+</head>
+<body>
+  <div class="login-page">
+    <div class="box login-box">
+      <div class="content">
+        <h2>Login</h2>
+        {% if error %}<p class="error"><strong>Error:</strong> {{ error }}{% endif %}
+        <form action="{{ url_for('capitan.login') }}" method="post">
+          <dl>
+            <!-- <dt>Username:</dt> -->
+            <dd><input type="text" name="username" placeholder="Username">
+            <!-- <dt>Password:</dt> -->
+            <dd><input type="password" name="password" placeholder="Password">
+            <dd><input type="submit" value="Login">
+          </dl>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

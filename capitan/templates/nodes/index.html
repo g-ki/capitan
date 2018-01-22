@@ -9,7 +9,7 @@
 
     <div class="box">
       <div class="header">
-        <h3 class="title">Swarm info</h3>
+        <h3 class="title">Swarm</h3>
         <div class="meta">
           <a class="button button-primary" href="{{ url_for('nodes.new') }}">+ Create</a>
         </div>
@@ -21,10 +21,10 @@
               <th>Host</th>
               <th>Role</th>
               <th>State</th>
-              <th>Addr</th>
               <th>ID</th>
               <th>EngineVersion</th>
-              <th>ManagerAddr</th>
+              <th>IP</th>
+              <th>Manager IP</th>
             </tr>
           </thead>
           <tbody>
@@ -33,10 +33,38 @@
               <td>{{ node['Host'] }}</td>
               <td>{{ node['Role'] }}</td>
               <td>{{ node['State'] }}</td>
-              <td>{{ node['Addr'] }}</td>
               <td>{{ node['Id'] }}</td>
               <td>{{ node['EngineVersion'] }}</td>
+              <td>{{ node['Addr'] }}</td>
               <td>{{ node['ManagerAddr'] }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="box">
+      <h3 class="title">Cloud</h3>
+      <div class="content">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Region</th>
+              <th>Power</th>
+              <th>Status</th>
+              <th>IP</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for droplet in droplets %}
+            <tr>
+              <td>{{ droplet.name }}</td>
+              <td>{{ droplet.region['name'] }}</td>
+              <td>{{ droplet.vcpus }}/{{ droplet.memory }}</td>
+              <td>{{ droplet.status }}</td>
+              <td>{{ droplet.ip_address }}</td>
             </tr>
             {% endfor %}
           </tbody>
@@ -52,36 +80,6 @@
         <hr>
         <strong>Manager Token</strong>
         <pre>docker swarm join --token {{tokens.tokens.Manager}} {{tokens.manager_addr}}</pre>
-      </div>
-    </div>
-
-    <div class="box">
-      <h3 class="title">Machines info</h3>
-      <div class="content">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Region</th>
-              <th>Power</th>
-              <th>Status</th>
-              <th>IP</th>
-              <!-- <th>Tags</th> -->
-            </tr>
-          </thead>
-          <tbody>
-            {% for droplet in droplets %}
-            <tr>
-              <td>{{ droplet.name }}</td>
-              <td>{{ droplet.region['name'] }}</td>
-              <td>{{ droplet.vcpus }}/{{ droplet.memory }}</td>
-              <td>{{ droplet.status }}</td>
-              <td>{{ droplet.ip_address }}</td>
-              <!-- <td>{{ droplet.tags }}</td> -->
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
       </div>
     </div>
   {% endif %}

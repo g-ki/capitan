@@ -1,5 +1,8 @@
 {% set endpoint = request.endpoint %}
 <div class="sidebar">
+  <div class="logo">
+    <h1>Capitan</h1>
+  </div>
   <nav>
     <ul>
       <li{% if endpoint == 'capitan.index' %} class="active"{% endif %}><a href="{{ url_for('capitan.index') }}">Dashboard</a></li>

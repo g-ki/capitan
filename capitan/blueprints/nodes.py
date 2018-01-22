@@ -29,8 +29,10 @@ def index():
         'manager_addr': docker_client.info()['Swarm']['RemoteManagers'][0]['Addr']
     }
 
-    manager = digitalocean.Manager(token=current_app.config['DOCEAN_TOKEN'])
-    droplets = manager.get_all_droplets()
+    droplets = []
+    if 'DOCEAN_TOKEN' in current_app.config:
+        manager = digitalocean.Manager(token=current_app.config['DOCEAN_TOKEN'])
+        droplets = manager.get_all_droplets()
 
     return render_template('nodes/index.html', nodes=nodes, tokens=tokens, droplets=droplets)
 

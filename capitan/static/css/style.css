@@ -65,14 +65,14 @@ a {
   padding: 10px 20px;
 }
 
-.header {
+.main > .header {
   background-color: #fff;
   height: 50px;
   border-bottom: 2px solid #dedede;
   padding: 0 5px;
 }
 
-.header > h1 {
+.main > .header > h1 {
   margin: 0;
   padding: 0 20px;
   line-height: 50px;
@@ -80,7 +80,7 @@ a {
   display: inline-block;
 }
 
-.header .user-info {
+.main > .header .user-info {
   float: right;
   margin-top: 15px;
   margin-right: 20px;
@@ -90,9 +90,17 @@ a {
 
 }
 
-.box > .title {
+.box .title {
   color: #7d8a9a;
   margin: 10px auto;
+  display: inline-block;
+}
+
+.box > .header > .meta {
+  margin: 10px 10px;
+  font-size: 1em;
+  display: inline-block;
+  float: right;
 }
 
 .box > .content {
@@ -163,4 +171,35 @@ input {
   float: right;
   margin-right: 40px;
   margin-top: 12px;
+}
+
+.button {
+  border: 0;
+  padding: 5px 10px;
+  font-weight: 700;
+}
+
+
+.button.button-primary {
+  background-color: #2ec499;
+  color: #fff;
+}
+
+pre {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 20px;
+  background-color: #f2f2f2;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
+textarea {
+  font-size: 14px;
+  height: 250px;
+  padding: 15px;
+  font-family: monospace,serif;
+  margin-bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
 }

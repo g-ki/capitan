@@ -6,9 +6,16 @@
   {% if not nodes %}
     <p>No nodes Available!</p>
   {% else %}
+
     <div class="box">
+      <div class="header">
+        <h3 class="title">Swarm info</h3>
+        <div class="meta">
+          <a class="button button-primary" href="{{ url_for('nodes.new') }}">+ Create</a>
+        </div>
+      </div>
       <div class="content">
-        <table>
+        <table class="table">
           <thead>
             <tr>
               <th>Host</th>
@@ -30,6 +37,47 @@
               <td>{{ node['Id'] }}</td>
               <td>{{ node['EngineVersion'] }}</td>
               <td>{{ node['ManagerAddr'] }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="box">
+      <h3 class="title">Join tokens</h3>
+      <div class="content">
+        <strong>Worker Token</strong>
+        <pre>docker swarm join --token {{tokens.tokens.Worker}} {{tokens.manager_addr}}</pre>
+        <hr>
+        <strong>Manager Token</strong>
+        <pre>docker swarm join --token {{tokens.tokens.Manager}} {{tokens.manager_addr}}</pre>
+      </div>
+    </div>
+
+    <div class="box">
+      <h3 class="title">Machines info</h3>
+      <div class="content">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Region</th>
+              <th>Power</th>
+              <th>Status</th>
+              <th>IP</th>
+              <!-- <th>Tags</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            {% for droplet in droplets %}
+            <tr>
+              <td>{{ droplet.name }}</td>
+              <td>{{ droplet.region['name'] }}</td>
+              <td>{{ droplet.vcpus }}/{{ droplet.memory }}</td>
+              <td>{{ droplet.status }}</td>
+              <td>{{ droplet.ip_address }}</td>
+              <!-- <td>{{ droplet.tags }}</td> -->
             </tr>
             {% endfor %}
           </tbody>

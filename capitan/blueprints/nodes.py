@@ -24,15 +24,32 @@ def index():
 
     nodes = list(map(compose_node, docker_client.nodes.list()))
 
-    return render_template('nodes/index.html', nodes=nodes)
+    tokens = {
+        'tokens': docker_client.swarm.attrs['JoinTokens'],
+        'manager_addr': docker_client.info()['Swarm']['RemoteManagers'][0]['Addr']
+    }
+
+    manager = digitalocean.Manager(token=current_app.config['DOCEAN_TOKEN'])
+    droplets = manager.get_all_droplets()
+
+    return render_template('nodes/index.html', nodes=nodes, tokens=tokens, droplets=droplets)
 
 
-@bp.route('/new')
+@bp.route('/new', methods=['GET'])
 def new():
     token = docker_client.swarm.attrs['JoinTokens']['Worker']
-    address = docker_client.info()['Swarm']['RemoteManagers'][0]['Addr']
-    script = f"docker swarm join --token {token} {address}"
+    addres = docker_client.info()['Swarm']['RemoteManagers'][0]['Addr']
 
+    user_data = ("#!/bin/bash\n\n"
+                "wget -qO- https://get.docker.com/ | sh\n"
+                "sudo usermod -aG docker $(whoami)\n\n"
+                f"docker swarm join --token {token} {addres}"
+                )
+
+    return render_template('nodes/new.html', user_data=user_data)
+
+@bp.route('/new', methods=['POST'])
+def create():
     if 'DOCEAN_TOKEN' in current_app.config:
         time_id = int(time.time())
         droplet = digitalocean.Droplet(
@@ -42,11 +59,11 @@ def new():
             image='ubuntu-16-04-x64', # Ubuntu 16.04 x64
             size_slug='s-1vcpu-1gb',  # 1vcpu + 1gb
             ssh_keys=[], # TODO: use ssh keys
-            user_data=None # TODO: write cloud-init script
+            user_data=request.form['user_data']
         )
-        # droplet.create()
+        droplet.create()
 
-    return render_template('nodes/new.html', script=script)
+    return redirect(url_for('.index'))
 
 
 @bp.route('/<path:node_id>')

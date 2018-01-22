@@ -1,3 +1,5 @@
 SECRET_KEY = 'reallypickagoodkeyhere'
 
 DEBUG = False
+
+DOCEAN_TOKEN = 'secretspecialuniquesnowflake'

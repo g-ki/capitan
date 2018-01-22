@@ -2,3 +2,4 @@ flask>=0.12.2
 gunicorn>=19.7.1
 
 docker>=2.7.0
+python-digitalocean>=1.13.2

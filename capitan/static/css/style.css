@@ -219,9 +219,17 @@ input {
   color: #fff;
 }
 
+.button.button-primary:hover {
+  background-color: #0c7f5e;
+}
+
 .button.button-danger {
   background-color: #f1495a;
   color: #fff;
+}
+
+.button.button-danger:hover {
+  background-color: #bb3240;
 }
 
 .button.in-action {

@@ -20,6 +20,7 @@
               <th>Name</th>
               <th>Image</th>
               <th>Replicas</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -28,6 +29,7 @@
               <td>{{ service['Name'] }}</td>
               <td>{{ service['Image'] }}</td>
               <td>{{ service['Replicas'] }}</td>
+              <td><a class="button button-danger services-delete" href="{{ url_for('services.delete', service_id=service['Id']) }}">Destroy</a></td>
             </tr>
             {% endfor %}
           </tbody>
@@ -35,4 +37,5 @@
         {% endif %}
     </div>
   </div>
+  <script src="{{ url_for('static', filename='./js/services.js') }}"></script>
 {% endblock %}

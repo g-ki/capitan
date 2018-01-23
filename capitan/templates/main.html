@@ -1,3 +1,4 @@
+<script src="{{ url_for('static', filename='./js/main.js') }}"></script>
 <div class="main">
   <div class="header">
     <h1>{% block header_title %}{% endblock %}</h1>
@@ -10,6 +11,4 @@
   <div class="content">
     {% block body %}{% endblock %}
   </div>
-
-  <script src="{{ url_for('static', filename='./js/main.js') }}"></script>
 </div>

@@ -14,6 +14,7 @@ def index():
     def compose_service(service):
         attributes = service.attrs
         return {
+            'Id': service.id,
             'Name': service.name,
             'Image': attributes['Spec']['TaskTemplate']['ContainerSpec']['Image'],
             'Replicas': attributes['Spec']['Mode'].get('Replicated', {}).get('Replicas', 0)
@@ -46,7 +47,14 @@ def new():
     return render_template('services/new.html')
 
 
-@bp.route('/<path:service_id>')
+@bp.route('/<path:service_id>', methods=['DELETE'])
 @login_required
-def user(service_id):
-    return f"Service with {service_id}"
+def delete(service_id):
+    services = docker_client.services.list(filters={'id': service_id})
+
+    if services:
+        service = services[0]
+        service.remove()
+        return (f'Node {service_id} deleted!', 204)
+    else:
+        return ('Error', 404)

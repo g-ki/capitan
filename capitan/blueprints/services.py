@@ -1,7 +1,7 @@
 from flask import Blueprint, request, session, g, redirect, url_for, abort, \
      render_template, flash, current_app
-from capitan.app import docker_client
-import docker
+from capitan.app import docker_client, docker_low_client
+import docker, json
 from capitan.blueprints.login_required import login_required
 
 url_prefix = '/services'
@@ -51,6 +51,29 @@ def new():
         return redirect(url_for('.index'))
 
     return render_template('services/new.html')
+
+
+@bp.route('/<path:service_id>', methods=['GET'])
+@login_required
+def show(service_id):
+    services = docker_client.services.list(filters={'id': service_id})
+    if not services:
+        abort(404)
+    service = services[0]
+
+    log = b""
+    for line in docker_low_client.service_logs(service.id, stdout=True, stderr=True, tail=100):
+        log += line
+    log = log.decode('utf-8')
+
+    inspect = docker_low_client.inspect_service(service.id)
+    inspect = json.dumps(inspect, sort_keys = False, indent = 2)
+
+    tasks = docker_low_client.tasks(filters={'service': service.id })
+
+    nodes = {t['ID']:docker_low_client.inspect_node(t['NodeID']) for t in tasks}
+
+    return render_template('services/show.html', service=service, log=log, inspect=inspect, tasks=tasks, nodes=nodes)
 
 
 @bp.route('/<path:service_id>', methods=['DELETE'])

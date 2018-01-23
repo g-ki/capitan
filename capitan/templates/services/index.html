@@ -26,7 +26,7 @@
           <tbody>
             {% for service in services %}
             <tr>
-              <td>{{ service['Name'] }}</td>
+              <td><a href="{{ url_for('services.show', service_id=service['Id']) }}">{{ service['Name'] }}</a></td>
               <td>{{ service['Image'] }}</td>
               <td>{{ service['Replicas'] }}</td>
               <td><a class="button button-danger services-delete" href="{{ url_for('services.delete', service_id=service['Id']) }}">Destroy</a></td>

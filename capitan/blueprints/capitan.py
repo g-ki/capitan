@@ -14,7 +14,7 @@ def login():
         db = get_db()
         cursor = db.execute("select username, password, id from users where username=?", [request.form['username']])
         user = tuple(cursor.fetchone())
-        hash_pass = hashlib.sha224(bytes(request.form['password'], encoding='ascii')).hexdigest()
+        hash_pass = hashlib.sha256(bytes(request.form['password'], encoding='utf-8')).hexdigest()
 
         if hash_pass != user[1]:
             return render_template('login.html', error='Wrong username or password!')

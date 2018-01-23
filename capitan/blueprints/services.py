@@ -28,10 +28,16 @@ def index():
 @login_required
 def new():
     if request.method == 'POST':
+        ports = None
+        if request.form['target_port'] and request.form['published_port']:
+            ports = {}
+            ports[int(request.form['target_port'])] = int(request.form['published_port'])
+
         options = {
-            'command': [request.form['command']],
-            'args': [request.form['arguments']],
+            'command': [request.form['command']] if request.form['command'] else None,
+            'args': [request.form['arguments']] if request.form['arguments'] else None,
             'name': request.form['name'],
+            'endpoint_spec': docker.types.EndpointSpec(ports=ports),
             'mode': docker.types.ServiceMode('replicated', replicas=int(float(request.form['replicas'])))
         }
 
@@ -55,6 +61,6 @@ def delete(service_id):
     if services:
         service = services[0]
         service.remove()
-        return (f'Node {service_id} deleted!', 204)
+        return (f'Service {service_id} deleted!', 204)
     else:
         return ('Error', 404)

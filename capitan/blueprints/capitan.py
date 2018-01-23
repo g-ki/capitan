@@ -18,7 +18,7 @@ def login():
             return render_template('login.html', error='Wrong username or password!')
 
         user = tuple(response)
-        hash_pass = hashlib.sha224(bytes(request.form['password'], encoding='ascii')).hexdigest()
+        hash_pass = hashlib.sha256(bytes(request.form['password'], encoding='utf-8')).hexdigest()
 
         if hash_pass != user[1]:
             return render_template('login.html', error='Wrong username or password!')

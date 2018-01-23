@@ -33,7 +33,7 @@ def get_db():
 
 def create_user(username, password):
     db = get_db()
-    hash_pass = hashlib.sha224(bytes(password, encoding='ascii')).hexdigest()
+    hash_pass = hashlib.sha256(bytes(password, encoding='utf-8')).hexdigest()
 
     db.execute('insert into users (username, password) values (?, ?)', [username, hash_pass])
     db.commit()

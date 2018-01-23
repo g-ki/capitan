@@ -2,12 +2,14 @@ from flask import Blueprint, request, session, g, redirect, url_for, abort, \
      render_template, flash, current_app
 from capitan.app import docker_client
 import docker
+from capitan.blueprints.login_required import login_required
 
 url_prefix = '/services'
 bp = Blueprint('services', __name__)
 
 
 @bp.route('/')
+@login_required
 def index():
     def compose_service(service):
         attributes = service.attrs
@@ -22,6 +24,7 @@ def index():
 
 
 @bp.route('/new', methods=['GET', 'POST'])
+@login_required
 def new():
     if request.method == 'POST':
         docker_client.services.create(
@@ -38,5 +41,6 @@ def new():
 
 
 @bp.route('/<path:service_id>')
+@login_required
 def user(service_id):
     return f"Service with {service_id}"

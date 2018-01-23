@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block header_title %}Users{% endblock %}
+
+{% block body %}
+  <div class="keys-index">
+    <div class="box">
+      <div class="header">
+        <h3 class="title">Registered users</h3>
+        <div class="meta">
+          <a class="button button-primary" href="{{ url_for('users.new') }}">+ Create</a>
+        </div>
+      </div>
+      <div class="content">
+        {% if not users %}
+          <p>No users Available!</p>
+        {% else %}
+          <ul>
+            {% for username in users %}
+            <li>{{username}}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

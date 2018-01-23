@@ -10,6 +10,10 @@
       <li{% if endpoint == 'nodes.index' %} class="active"{% endif %}><a href="{{ url_for('nodes.index') }}">Nodes</a></li>
 
       <li{% if endpoint == 'services.index' %} class="active"{% endif %}><a href="{{ url_for('services.index') }}">Services</a></li>
+
+      <li{% if endpoint == 'users.index' %} class="active"{% endif %}><a href="{{ url_for('users.index') }}">Users</a></li>
+
+      <li{% if endpoint == 'keys.index' %} class="active"{% endif %}><a href="{{ url_for('keys.index') }}">Keys</a></li>
     </ul>
   </nav>
 </div>

@@ -1,6 +1,9 @@
 from flask import Blueprint, request, session, g, redirect, url_for, abort, \
      render_template, flash, current_app
 from capitan.app import docker_client, docker_low_client
+from capitan.blueprints.database import get_db
+from capitan.blueprints.login_required import login_required
+import hashlib
 
 bp = Blueprint('capitan', __name__)
 
@@ -8,24 +11,33 @@ bp = Blueprint('capitan', __name__)
 def login():
     error = None
     if request.method == 'POST':
-        #
-        # TODO:
-        # validate and login ..
-        #
+        db = get_db()
+        cursor = db.execute("select username, password, id from users where username=?", [request.form['username']])
+        user = tuple(cursor.fetchone())
+        hash_pass = hashlib.sha224(bytes(request.form['password'], encoding='ascii')).hexdigest()
+
+        if hash_pass != user[1]:
+            return render_template('login.html', error='Wrong username or password!')
+
         session['logged_in'] = True
-        flash('You were logged in')
+        session['user_id'] = user[2]
+
         return redirect(url_for('capitan.index'))
     return render_template('login.html', error=error)
 
 
 @bp.route('/logout')
+@login_required
 def logout():
+    session.pop('user_id', None)
     session.pop('logged_in', None)
     flash('You were logged out')
+
     return redirect(url_for('capitan.login'))
 
 
 @bp.route('/')
+@login_required
 def index():
     status = docker_client.info()
 
@@ -39,6 +51,7 @@ def index():
 
 
 @bp.route('/containers')
+@login_required
 def containers():
     containers = docker_client.containers.list();
     containers_ports = {}

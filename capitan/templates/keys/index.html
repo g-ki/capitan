@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block header_title %}SSH Keys{% endblock %}
+
+{% block body %}
+  <div class="keys-index">
+    <div class="box">
+      <div class="header">
+        <h3 class="title">Keys</h3>
+        <div class="meta">
+          <a class="button button-primary" href="{{ url_for('keys.new') }}">+ Create</a>
+        </div>
+      </div>
+      <div class="content">
+        {% if not keys %}
+          <p>No keys Available!</p>
+        {% else %}
+          {% for key in keys %}
+            <textarea disabled>{{key}}</textarea>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

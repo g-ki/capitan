@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block header_title %}{{service.name}} - service{% endblock %}
+
+{% block body %}
+  <div class="box">
+    <h3 class="title">Tasks</h3>
+    <div class="content">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Image</th>
+            <th>Node</th>
+            <th>Desired state</th>
+            <th>Current state</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for task in tasks %}
+          <tr>
+            <td>{{ task['ID'] }}</td>
+            <td>{{ service.name }}.{{loop.index}}</td>
+            <td>{{ task['Spec']['ContainerSpec']['Image'] }}</td>
+            <td>{{ nodes[task['ID']]['Description']['Hostname'] }}</td>
+            <td>{{ task['DesiredState'] }}</td>
+            <td>{{ task['Status']['State'] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="service-add-page">
+    <div class="box">
+      <h3 class="title">Inspect</h3>
+      <div class="content">
+       <textarea disabled>{{inspect}}</textarea>
+      </div>
+    </div>
+
+
+    <div class="box">
+      <h3 class="title">Logs (tail=100)</h3>
+      <div class="content">
+        <textarea disabled>{{log}}</textarea>
+      </div>
+    </div>
+  </div>
+{% endblock %}

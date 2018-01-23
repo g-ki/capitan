@@ -27,15 +27,21 @@ def index():
 @login_required
 def new():
     if request.method == 'POST':
+        options = {
+            'command': [request.form['command']],
+            'args': [request.form['arguments']],
+            'name': request.form['name'],
+            'mode': docker.types.ServiceMode('replicated', replicas=int(float(request.form['replicas'])))
+        }
+
+        if request.form['constraint']:
+            options['constraints'] = request.form['constraint']
+
         docker_client.services.create(
           request.form['image'],
-          command=[request.form['command']],
-          args=[request.form['arguments']],
-          name=request.form['name'],
-          constraints=[request.form['constraint']],
-          mode=docker.types.ServiceMode('replicated', replicas=int(float(request.form['replicas'])))
+          **options
         )
-        return redirect(url_for('.new'))
+        return redirect(url_for('.index'))
 
     return render_template('services/new.html')
 

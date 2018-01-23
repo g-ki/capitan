@@ -3,17 +3,17 @@
 {% block header_title %}Services{% endblock %}
 
 {% block body %}
-  {% if not services %}
-    <p>No services Available!</p>
-  {% else %}
-    <div class="box">
-      <div class="header">
-        <h3 class="title">Services</h3>
-        <div class="meta">
-          <a class="button button-primary" href="{{ url_for('services.new') }}">+ Create</a>
-        </div>
+  <div class="box">
+    <div class="header">
+      <h3 class="title">Services</h3>
+      <div class="meta">
+        <a class="button button-primary" href="{{ url_for('services.new') }}">+ Create</a>
       </div>
-      <div class="content">
+    </div>
+    <div class="content">
+      {% if not services %}
+        <p>No services Available!</p>
+      {% else %}
         <table class="table">
           <thead>
             <tr>
@@ -32,7 +32,7 @@
             {% endfor %}
           </tbody>
         </table>
-      </div>
+        {% endif %}
     </div>
-  {% endif %}
+  </div>
 {% endblock %}

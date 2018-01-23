@@ -1,22 +1,30 @@
 {% extends "layout.html" %}
+
+{% block header_title %}Add Service{% endblock %}
+
 {% block body %}
-  <h1>Add Service</h1>
-  <form action="{{ url_for('services.new') }}" method="post">
-    <dl>
-      <dt>Service name:
-      <dd><input type="text" name="name">
-      <dt>Image:
-      <dd><input type="text" name="image">
-      <dt>Command:
-      <dd><input type="text" name="command">
-      <dt>Arguments:
-      <dd><input type="text" name="arguments">
-      <dt>Constraint:
-      <label><i>(ex. node.hostname==node-2)</i></label>
-      <dd><input type="text" name="constraint">
-      <dt>Replicas:
-      <dd><input type="number" name="replicas">
-      <dd><input type="submit" value="Add">
-    </dl>
-  </form>
+  <div class="service-add-page">
+    <div class="box">
+      <div class="content">
+        <form action="{{ url_for('services.new') }}" method="post">
+          <dl>
+            <dt>Service name:
+            <dd><input type="text" name="name">
+            <dt>Image:
+            <dd><input type="text" name="image">
+            <dt>Command:
+            <dd><input type="text" name="command">
+            <dt>Arguments:
+            <dd><input type="text" name="arguments">
+            <dt>Constraint:
+            <label><i>(ex. node.hostname==node-2)</i></label>
+            <dd><input type="text" name="constraint">
+            <dt>Replicas:
+            <dd><input type="number" name="replicas">
+            <dd><input class="button button-primary" type="submit" value="Add">
+          </dl>
+        </form>
+      </div>
+    </div>
+  </div>
 {% endblock %}

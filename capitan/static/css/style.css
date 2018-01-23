@@ -96,8 +96,13 @@ a {
   display: inline-block;
 }
 
+.box > .header {
+  margin-bottom: 10px;
+}
+
 .box > .header > .meta {
   margin: 10px 10px;
+  margin-right: 0;
   font-size: 1em;
   display: inline-block;
   float: right;
@@ -150,6 +155,30 @@ input {
 
 .login-page input[type="submit"]:hover {
 
+}
+
+.service-add-page form {
+  width: 320px;
+  margin-left: 15px;
+}
+
+.service-add-page dt {
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
+.service-add-page dd {
+  margin-left: 0;
+}
+
+.service-add-page input {
+  width: 75%;
+  margin-top: 0;
+}
+
+.service-add-page input[type="submit"] {
+  width: 100%;
+  margin-top: 10px;
 }
 
 .logo {

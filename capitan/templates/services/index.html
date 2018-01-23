@@ -7,6 +7,12 @@
     <p>No services Available!</p>
   {% else %}
     <div class="box">
+      <div class="header">
+        <h3 class="title">Services</h3>
+        <div class="meta">
+          <a class="button button-primary" href="{{ url_for('services.new') }}">+ Create</a>
+        </div>
+      </div>
       <div class="content">
         <table class="table">
           <thead>

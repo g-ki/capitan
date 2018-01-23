@@ -20,13 +20,21 @@ def index():
 @bp.route('/new', methods=['GET'])
 @login_required
 def new():
-    return render_template('users/new.html')
+    error = session.pop('error_message', None)
+    return render_template('users/new.html', error=error)
 
 
 @bp.route('/new', methods=['POST'])
 @login_required
 def create():
-    create_user(request.form['username'], request.form['password'])
+    username = request.form['username']
+    password = request.form['password']
+
+    if len(username) < 3 or len(password) < 3:
+        session['error_message'] = "Username and password must be atleast 4 symbols"
+        return redirect(url_for('.new'))
+
+    create_user(username, password)
 
     return redirect(url_for('.index'))
 

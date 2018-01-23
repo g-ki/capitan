@@ -219,6 +219,24 @@ input {
   color: #fff;
 }
 
+.button.button-danger {
+  background-color: #f1495a;
+  color: #fff;
+}
+
+.button.in-action {
+  animation-name: flash;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes flash {
+    0% { opacity: 1.0; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1.0; }
+}
+
 pre {
   max-width: 100%;
   overflow-x: auto;

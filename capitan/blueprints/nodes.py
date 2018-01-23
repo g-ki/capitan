@@ -59,22 +59,36 @@ def new():
 def create():
     if 'DOCEAN_TOKEN' in current_app.config:
         time_id = int(time.time())
-        user_keys = user_keys()
+        user_ssh_keys = user_keys()
         droplet = digitalocean.Droplet(
             token=current_app.config['DOCEAN_TOKEN'],
             name=f'worker-{time_id}',
             region='fra1', # Frankfurt 1
             image='ubuntu-16-04-x64', # Ubuntu 16.04 x64
             size_slug='s-1vcpu-1gb',  # 1vcpu + 1gb
-            ssh_keys=user_keys, # ['ssh1', 'ssh2']
+            ssh_keys=user_ssh_keys, # ['ssh1', 'ssh2']
             user_data=request.form['user_data']
         )
         droplet.create()
 
     return redirect(url_for('.index'))
 
-
 @bp.route('/<path:node_id>')
 @login_required
 def show(node_id):
     return f"Node {node_id}"
+
+
+@bp.route('/<path:node_id>', methods=['DELETE'])
+@login_required
+def delete(node_id):
+    if 'DOCEAN_TOKEN' in current_app.config:
+        droplet = digitalocean.Droplet.get_object(
+            api_token=current_app.config['DOCEAN_TOKEN'],
+            droplet_id=node_id
+        )
+        droplet.destroy()
+        return (f'Node {node_id} deleted!', 204)
+
+    abort(404)
+
